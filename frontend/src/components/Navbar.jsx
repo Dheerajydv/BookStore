@@ -1,4 +1,5 @@
 import React, { useCallback, useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import { ThemeContext } from "../contexts/ThemeContext";
 
@@ -6,20 +7,18 @@ function Navbar() {
   const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
   const { theme, setTheme } = useContext(ThemeContext);
   const [searchInput, setSearchInput] = useState("");
+  const navigate = useNavigate();
 
   const handelLogoutBtnClick = () => {
-    console.log("logged Out");
     setIsAuthenticated(false);
   };
 
   const handelLoginBtnClick = () => {
-    console.log("logged Out");
-    setIsAuthenticated(true);
+    navigate("/login");
   };
 
   const handelSignupBtnClick = () => {
-    console.log("Signed UP");
-    setIsAuthenticated(true);
+    navigate("/signup");
   };
 
   const handleSearchBtnClick = () => {
@@ -35,9 +34,19 @@ function Navbar() {
   };
 
   return (
-    <div>
-      <div>
-        <h1>BookStore</h1>
+    <div
+      className={
+        theme === "dark"
+          ? "bg-gray-950 text-white flex justify-around items-center"
+          : "bg-white text-black flex justify-around items-center"
+      }
+    >
+      <div
+        onClick={() => {
+          navigate("/");
+        }}
+      >
+        <h1 className="font-extrabold text-2xl">BookStore</h1>
       </div>
       <div>
         <img
@@ -58,9 +67,23 @@ function Navbar() {
       </div>
       <div>
         {isAuthenticated ? null : (
-          <button onClick={handelSignupBtnClick}>Signup</button>
+          <button
+            className={
+              theme == "dark"
+                ? "bg-orange-500 rounded-lg px-2"
+                : "bg-orange-500 rounded-lg px-2"
+            }
+            onClick={handelSignupBtnClick}
+          >
+            Signup
+          </button>
         )}
         <button
+          className={
+            theme == "dark"
+              ? "border border-orange-500 rounded-lg px-2"
+              : "border border-orange-500 rounded-lg px-2"
+          }
           onClick={isAuthenticated ? handelLogoutBtnClick : handelLoginBtnClick}
         >
           {isAuthenticated ? "Logout" : "Login"}
