@@ -1,9 +1,10 @@
 import express from "express";
-import { getAllBooks } from "../controllers/books.controllers.js";
+// import { getAllBooks, addBook } from "../controllers/books.controllers.js";
+import { upload } from "../middlewares/multer.middleware.js";
 
 const router = express.Router();
 
-router.get("/allbooks", getAllBooks);
-// router.post("/addbook", addBook);
+// router.get("/allbooks", getAllBooks);
+// router.post("/addbook", upload.single("book"), addBook);
 
 export default router;

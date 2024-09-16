@@ -1,13 +1,28 @@
-import React, { useCallback, useContext, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import { ThemeContext } from "../contexts/ThemeContext";
+import axios from "axios";
 
 function Navbar() {
   const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
   const { theme, setTheme } = useContext(ThemeContext);
   const [searchInput, setSearchInput] = useState("");
   const navigate = useNavigate();
+  let profileUrl = "";
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/api/v1/auth/getuser", {
+        withCredentials: true,
+      })
+      .then((response) => {
+        profileUrl = response.data.data.profilePicture;
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  });
 
   const handelLogoutBtnClick = () => {
     setIsAuthenticated(false);
@@ -50,7 +65,8 @@ function Navbar() {
       </div>
       <div>
         <img
-          src={isAuthenticated ? "../assets/pfp2.jpg" : "../assets/pfp.jpg"}
+          src={isAuthenticated ? `profileUrl` : "../assets/pfp.jpg"}
+          alt="Profile Picture"
         />
       </div>
       <div>

@@ -19,7 +19,7 @@ const userSchema = new Schema(
       required: true,
       minlength: 6,
     },
-    avatar: {
+    profilePicture: {
       type: String,
     },
   },

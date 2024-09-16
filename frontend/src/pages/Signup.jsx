@@ -3,15 +3,27 @@ import Navbar from "../components/Navbar";
 import axios from "axios";
 
 function Signup() {
-  const [data, setData] = useState({ email: "", username: "", password: "" });
+  const [data, setData] = useState({
+    email: "",
+    username: "",
+    password: "",
+  });
 
-  const handleSignUp = () => {
+  const [profilePicture, setProfilePicture] = useState(null);
+
+  const handleSignUp = (e) => {
+    e.preventDefault();
+    console.log(data);
     const { email, username, password } = data;
     axios
       .post(
         "http://localhost:8000/api/v1/auth/signup",
-        { email, username, password },
-        { withCredentials: true, credentials: "include" }
+        { email, username, password, profilePicture },
+        {
+          withCredentials: true,
+          credentials: "include",
+          headers: { "Content-Type": "multipart/form-data" },
+        }
       )
       .then((res) => {
         console.log(res.data);
@@ -23,7 +35,7 @@ function Signup() {
   return (
     <div>
       <Navbar />
-      <div>
+      <form>
         <input
           type="text"
           placeholder="Email"
@@ -48,8 +60,21 @@ function Signup() {
             setData({ ...data, password: e.target.value });
           }}
         />
+        <input
+          type="file"
+          onChange={(e) => {
+            setProfilePicture(e.target.files[0]);
+          }}
+        />
+        {/* <form
+          action="http://localhost:8000/api/v1/auth/signup"
+          method="POST"
+          encType="multipart/form-data"
+        >
+          <input type="file" />
+        </form> */}
         <button onClick={handleSignUp}>Signup</button>
-      </div>
+      </form>
     </div>
   );
 }
