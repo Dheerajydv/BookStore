@@ -8,6 +8,7 @@ import cors from "cors";
 // Imports
 import bookRoutes from "./routes/books.routes.js";
 import authRoutes from "./routes/auth.routes.js";
+import userRoutes from "./routes/user.routes.js";
 
 const app = express();
 // const port = process.env.PORT;
@@ -28,6 +29,7 @@ app.use(
 // Routes
 app.use("/api/v1/books", bookRoutes);
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/users", userRoutes);
 
 // App Listening
 app.listen(process.env.PORT, () => {

@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import Book from "./books.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
@@ -19,6 +20,24 @@ const userSchema = new Schema(
       required: true,
       minlength: 6,
     },
+    likedBooks: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: Book,
+      },
+    ],
+    disLikedBooks: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: Book,
+      },
+    ],
+    toRead: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: Book,
+      },
+    ],
     profilePicture: {
       type: String,
     },

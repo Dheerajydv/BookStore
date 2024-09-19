@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import Navbar from "../components/Navbar";
 import axios from "axios";
 import { ThemeContext } from "../contexts/ThemeContext";
+import { toast, Toaster } from "react-hot-toast";
 
 function Login() {
   const { theme, setTheme } = useContext(ThemeContext);
@@ -17,9 +18,11 @@ function Login() {
       )
       .then((res) => {
         console.log(res.data);
+        toast.success(res.data.message);
       })
       .catch((error) => {
         console.error(error.response.data.message);
+        toast.error(error.response.data.message);
       });
   };
   return (
@@ -48,6 +51,7 @@ function Login() {
         />
         <button onClick={handleLogin}>Login</button>
       </div>
+      <Toaster position="botton-right" />
     </div>
   );
 }

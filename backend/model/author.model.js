@@ -8,6 +8,10 @@ const authorSchema = new Schema(
       required: true,
     },
     allBooks: [{ type: Schema.Types.ObjectId, ref: Book }],
+    authorRating: {
+      type: Number,
+      enum: [1, 2, 3, 4, 5],
+    },
   },
   { timestamps: true }
 );

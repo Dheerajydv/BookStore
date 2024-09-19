@@ -58,7 +58,7 @@ const signupUser = async (req, res) => {
         );
     }
 
-    console.log(req.file.path);
+    // console.log(req.file.path);
     const profilePicLocalPath = req.file.path;
     if (!profilePicLocalPath) {
       res.status(400).json(new ApiError(400, "Profile Pic required"));
@@ -125,19 +125,16 @@ const loginUser = async (req, res) => {
 };
 
 const getUser = async (req, res) => {
-  const userId = req.user._id;
-  const userInfo = await User.findById(userId);
-  res.status(200).json(new ApiResponse(200, userInfo, "Got user data"));
+  try {
+    const userId = req.user._id;
+    const userInfo = await User.findById(userId);
+    res.status(200).json(new ApiResponse(200, userInfo, "Got user data"));
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json(new ApiError(500, "Some error occured in getUser controller"));
+  }
 };
 
-const updateProfilePicture = async (req, res) => {};
-
-const updateProfileInfo = async (req, res) => {};
-
-export {
-  signupUser,
-  loginUser,
-  updateProfilePicture,
-  updateProfileInfo,
-  getUser,
-};
+export { signupUser, loginUser, getUser };

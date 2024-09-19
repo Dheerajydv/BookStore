@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import axios from "axios";
+import { toast, Toaster } from "react-hot-toast";
 
 function Signup() {
   const [data, setData] = useState({
@@ -27,9 +28,11 @@ function Signup() {
       )
       .then((res) => {
         console.log(res.data);
+        toast.success(res.data.message);
       })
       .catch((error) => {
         console.error(error.response.data.message);
+        toast.error(error.response.data.message);
       });
   };
   return (
@@ -75,6 +78,7 @@ function Signup() {
         </form> */}
         <button onClick={handleSignUp}>Signup</button>
       </form>
+      <Toaster position="bottom-right" />
     </div>
   );
 }

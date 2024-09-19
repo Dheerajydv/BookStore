@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import { ThemeContext } from "../contexts/ThemeContext";
 import axios from "axios";
+import { toast, Toaster } from "react-hot-toast";
 
 function Navbar() {
   const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
@@ -22,7 +23,7 @@ function Navbar() {
       .catch((err) => {
         console.error(err);
       });
-  });
+  }, [setIsAuthenticated, setTheme]);
 
   const handelLogoutBtnClick = () => {
     setIsAuthenticated(false);
@@ -43,8 +44,10 @@ function Navbar() {
   const themeChangeBtnClickFunction = () => {
     if (theme == "dark") {
       setTheme("light");
+      toast.success("Theme changed to Light");
     } else {
       setTheme("dark");
+      toast.success("Theme changed to Dark");
     }
   };
 
@@ -110,6 +113,7 @@ function Navbar() {
           {theme == "dark" ? "☀" : "🌑"}
         </button>
       </div>
+      <Toaster position="botton-right" />
     </div>
   );
 }

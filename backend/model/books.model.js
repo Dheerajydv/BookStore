@@ -15,8 +15,15 @@ const bookSchema = new Schema(
     likes: {
       type: Number,
     },
+    disLikes: {
+      type: Number,
+    },
     readBy: {
       type: Number,
+    },
+    bookRating: {
+      type: Number,
+      enum: [1, 2, 3, 4, 5],
     },
   },
   { timestamps: true }
