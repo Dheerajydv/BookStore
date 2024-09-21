@@ -1,10 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 
 import Navbar from "../components/Navbar";
 import BookList from "../components/BookList";
+import UpdateProfile from "../components/UpdateProfile";
+import UpdateUsername from "../components/UpdateUsername";
+import UpdatePassword from "../components/UpdatePassword";
+import { AuthContext } from "../contexts/AuthContext";
 
 function Profile() {
+  const { isAuthenticated } = useContext(AuthContext);
+  if (!isAuthenticated) return null;
   const [data, setData] = useState({
     username: "",
     email: "",
@@ -55,13 +61,18 @@ function Profile() {
             src={data.profileUrl}
             alt="Profile Picture"
           />
+          <UpdateProfile />
         </div>
         <div>
-          <h1>{data.username}</h1>
+          <div>
+            <h1>{data.username}</h1>
+            <UpdateUsername />
+            <UpdatePassword />
+          </div>
           <p>{data.email}</p>
-          <BookList books={data.likedBooks} />
-          <BookList books={data.disLikedBooks} />
-          <BookList books={data.toRead} />
+          <BookList title={"Liked Books"} books={data.likedBooks} />
+          <BookList title={"Disiked Books"} books={data.disLikedBooks} />
+          <BookList title={"Books To Read"} books={data.toRead} />
         </div>
       </div>
     </>

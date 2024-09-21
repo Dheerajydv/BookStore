@@ -16,7 +16,7 @@ router.post("/changepassword", verifyUser, changePassword);
 router.post(
   "/updateprofilepic",
   verifyUser,
-  upload.single("newProfile"),
+  upload.single("newProfilePicture"),
   updateProfilePhoto
 );
 

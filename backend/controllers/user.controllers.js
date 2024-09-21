@@ -36,6 +36,7 @@ const changePassword = async (req, res) => {
     }
 
     const { oldPassword, newPassword } = req.body;
+    console.log({ oldPassword, newPassword });
     if (!oldPassword || !newPassword) {
       throw new ApiError(400, "All fields are required");
     }
@@ -53,10 +54,10 @@ const changePassword = async (req, res) => {
 
     res
       .status(200)
-      .json(new ApiResponse(200, {}, "password changed sucessfully"));
+      .json(new ApiResponse(200, {}, "Password changed sucessfully"));
   } catch (error) {
     console.error(error);
-    res.status(400).json({ error });
+    res.status(500).json({ error });
   }
 };
 
@@ -94,6 +95,7 @@ const changeUsername = async (req, res) => {
 const updateProfilePhoto = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
+    console.log(req.files);
     const avatarLocalPath = req.file.path;
     if (!avatarLocalPath) {
       throw new ApiError(400, "Please provide a avatar");

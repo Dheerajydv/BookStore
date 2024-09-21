@@ -68,13 +68,6 @@ function Signup() {
             setProfilePicture(e.target.files[0]);
           }}
         />
-        {/* <form
-          action="http://localhost:8000/api/v1/auth/signup"
-          method="POST"
-          encType="multipart/form-data"
-        >
-          <input type="file" />
-        </form> */}
         <button onClick={handleSignUp}>Signup</button>
       </form>
       <Toaster position="bottom-right" />
