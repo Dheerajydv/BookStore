@@ -14,7 +14,6 @@ function Signup() {
 
   const handleSignUp = (e) => {
     e.preventDefault();
-    console.log(data);
     const { email, username, password } = data;
     axios
       .post(

@@ -14,7 +14,7 @@ router.get("/getuser", verifyUser, getUserData);
 router.post("/changeusername", verifyUser, changeUsername);
 router.post("/changepassword", verifyUser, changePassword);
 router.post(
-  "changeprofile",
+  "/updateprofilepic",
   verifyUser,
   upload.single("newProfile"),
   updateProfilePhoto

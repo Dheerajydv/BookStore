@@ -51,6 +51,12 @@ function Navbar() {
     }
   };
 
+  const handleProfileBtnClick = (e) => {
+    if (isAuthenticated) {
+      navigate("/profile");
+    }
+  };
+
   return (
     <div
       className={
@@ -66,7 +72,7 @@ function Navbar() {
       >
         <h1 className="font-extrabold text-2xl">BookStore</h1>
       </div>
-      <div>
+      <div onClick={handleProfileBtnClick}>
         <img
           src={isAuthenticated ? `profileUrl` : "../assets/pfp.jpg"}
           alt="Profile Picture"

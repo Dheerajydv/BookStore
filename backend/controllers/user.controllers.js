@@ -1,4 +1,5 @@
 import User from "../model/user.model.js";
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 
@@ -10,7 +11,7 @@ const getUserData = async (req, res) => {
       throw new ApiError(401, "Please Provide a id");
     }
 
-    const userData = await User.findById(userId);
+    const userData = await User.findById(userId).select("-password");
     if (!userData) {
       res.status(404).json(new ApiError(404, "User data not found"));
     }
@@ -90,7 +91,33 @@ const changeUsername = async (req, res) => {
   }
 };
 
-const updateProfilePhoto = async (req, res) => {};
+const updateProfilePhoto = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    const avatarLocalPath = req.file.path;
+    if (!avatarLocalPath) {
+      throw new ApiError(400, "Please provide a avatar");
+    }
+
+    const newProfilePicture = await uploadOnCloudinary(avatarLocalPath);
+    if (!newProfilePicture) {
+      throw new ApiError(
+        500,
+        "Some error occured in the uploading of new profile pricture"
+      );
+    }
+
+    user.profilePicture = newProfilePicture.url;
+    await user.save({ validateBeforeSave: false });
+
+    res
+      .status(200)
+      .json(new ApiResponse(200, {}, "Profile Picture changed sucessfully"));
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error });
+  }
+};
 
 const likeBook = async (req, res) => {};
 
