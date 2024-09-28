@@ -39,18 +39,6 @@ function Profile() {
         console.error(err);
       });
   }, [setData]);
-  const booksArray = [
-    "Whispers of the Forgotten Woods",
-    "The Chronicles of Echo City",
-    "Beneath the Starlit Skies",
-    "The Shadow of Solstice Tower",
-    "Embers of a Distant War",
-    "The Lost Keys of Valoria",
-    "Echoes from the Abyss",
-    "The Glass Kingdom’s Secret",
-    "Moonlit Pathways and Dreams",
-    "The Alchemist's Last Experiment",
-  ];
   return (
     <>
       <Navbar />

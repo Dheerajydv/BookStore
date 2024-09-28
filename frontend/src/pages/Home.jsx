@@ -1,10 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
-import { AuthContext } from "../contexts/AuthContext";
 import axios from "axios";
 
 function Home() {
-  // const { isAuthenticated } = useContext(AuthContext);
   const [allBooks, setAllBooks] = useState([]);
   useEffect(() => {
     axios.get("http://localhost:8000/api/v1/books/allbooks").then((res) => {
