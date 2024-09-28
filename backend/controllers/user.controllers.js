@@ -121,11 +121,14 @@ const updateProfilePhoto = async (req, res) => {
   }
 };
 
-const likeBook = async (req, res) => {};
+// const likeBook = async (req, res) => {
+//   const bookId = req.params._id;
+//   cosnt
+// };
 
 export {
   getUserData,
-  likeBook,
+  // likeBook,
   changePassword,
   updateProfilePhoto,
   changeUsername,
