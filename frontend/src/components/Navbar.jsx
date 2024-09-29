@@ -10,7 +10,7 @@ function Navbar() {
   const { theme, setTheme } = useContext(ThemeContext);
   const [searchInput, setSearchInput] = useState("");
   const navigate = useNavigate();
-  let profileUrl = "";
+  const [profileUrl, setProfileUrl] = useState("");
 
   useEffect(() => {
     axios
@@ -18,7 +18,7 @@ function Navbar() {
         withCredentials: true,
       })
       .then((response) => {
-        profileUrl = response.data.data.profilePicture;
+        setProfileUrl(response.data.data.profilePicture);
       })
       .catch((err) => {
         console.error(err);
@@ -27,6 +27,8 @@ function Navbar() {
 
   const handelLogoutBtnClick = () => {
     setIsAuthenticated(false);
+    document.cookie =
+      "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
   };
 
   const handelLoginBtnClick = () => {
@@ -61,8 +63,8 @@ function Navbar() {
     <div
       className={
         theme === "dark"
-          ? "bg-gray-950 text-white flex justify-around items-center"
-          : "bg-white text-black flex justify-around items-center"
+          ? "bg-gray-950 text-white flex justify-around items-center h-20"
+          : "bg-white text-black flex justify-around items-center h-20"
       }
     >
       <div
@@ -70,16 +72,16 @@ function Navbar() {
           navigate("/");
         }}
       >
-        <h1 className="font-extrabold text-2xl">BookStore</h1>
+        <h1 className="font-extrabold cursor-pointer text-2xl">BookStore</h1>
       </div>
-      <div onClick={handleProfileBtnClick}>
-        <img
-          src={isAuthenticated ? `profileUrl` : "../assets/pfp.jpg"}
-          alt="Profile Picture"
-        />
-      </div>
-      <div>
+
+      <div className="flex justify-center items-center gap-2">
         <input
+          className={
+            theme === "dark"
+              ? "h-10 w-60 border border-orange-500 rounded-lg p-4 bg-gray-950 text-white"
+              : "h-10 w-60 border border-orange-500 rounded-lg p-4"
+          }
           type="text"
           placeholder="Search Books"
           name="searchInput"
@@ -88,9 +90,21 @@ function Navbar() {
             setSearchInput(e.target.value);
           }}
         />
-        <button onClick={handleSearchBtnClick}>🔍</button>
+        <button
+          onClick={handleSearchBtnClick}
+          className="h-10 bg-orange-500 w-10 rounded-xl"
+        >
+          🔍
+        </button>
       </div>
-      <div>
+      <div className="flex justify-between items-center gap-4">
+        <div onClick={handleProfileBtnClick}>
+          <img
+            className="h-16 w-16 rounded-full"
+            src={isAuthenticated ? profileUrl : "../assets/pfp.jpg"}
+            alt="Profile Picture"
+          />
+        </div>
         {isAuthenticated ? null : (
           <button
             className={
@@ -106,8 +120,8 @@ function Navbar() {
         <button
           className={
             theme == "dark"
-              ? "border border-orange-500 rounded-lg px-2"
-              : "border border-orange-500 rounded-lg px-2"
+              ? " bg-orange-500 rounded-lg px-2"
+              : " bg-orange-500 rounded-lg px-2"
           }
           onClick={isAuthenticated ? handelLogoutBtnClick : handelLoginBtnClick}
         >

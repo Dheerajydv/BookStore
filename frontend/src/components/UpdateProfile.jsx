@@ -35,7 +35,12 @@ function UpdateProfile() {
           setNewProfilePicture(e.target.files[0]);
         }}
       />
-      <button onClick={handleProfileChange}>Change Profile</button>
+      <button
+        className="h-6 rounded-xl px-4 bg-orange-500"
+        onClick={handleProfileChange}
+      >
+        Change Profile
+      </button>
       <Toaster position="bottom-right" />
     </div>
   );

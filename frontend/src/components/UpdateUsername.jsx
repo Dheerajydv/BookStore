@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
+import { ThemeContext } from "../contexts/ThemeContext";
 
 function UpdateUsername() {
   const [newUsername, setNewUsername] = useState("");
+  const { theme } = useContext(ThemeContext);
   const handleUsernameChangeBtn = (e) => {
     console.log(newUsername);
     e.preventDefault();
@@ -26,9 +28,14 @@ function UpdateUsername() {
       });
   };
   return (
-    <div>
+    <div className="my-4">
       <p>Change Username</p>
       <input
+        className={
+          theme === "dark"
+            ? "bg-gray-700 h-6 rounded-xl px-4"
+            : "h-6 rounded-xl px-4 border border-black"
+        }
         type="text"
         value={newUsername}
         placeholder="Enter New Username"
@@ -36,7 +43,12 @@ function UpdateUsername() {
           setNewUsername(e.target.value);
         }}
       />
-      <button onClick={handleUsernameChangeBtn}>Update Username</button>
+      <button
+        className="h-6 rounded-xl px-4 bg-orange-500"
+        onClick={handleUsernameChangeBtn}
+      >
+        Update Username
+      </button>
     </div>
   );
 }

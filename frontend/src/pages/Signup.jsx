@@ -30,8 +30,8 @@ function Signup() {
         toast.success(res.data.message);
       })
       .catch((error) => {
-        console.error(error.response.data.message);
-        toast.error(error.response.data.message);
+        console.error(error.response.data.error.message);
+        toast.error(error.response.data.error.message);
       });
   };
   return (

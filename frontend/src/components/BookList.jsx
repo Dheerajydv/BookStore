@@ -3,11 +3,15 @@ import React from "react";
 function BookList(props) {
   // console.log(props.book);
   return (
-    <div>
-      <h3>{props.title}</h3>
-      {props.books.map((book) => (
-        <p key={book}>{book}</p>
-      ))}
+    <div className="my-4  rounded-xl py-4 ">
+      <h3 className="text-xl font-semibold underline">
+        {props.title} ({props.books.length})
+      </h3>
+      <ol>
+        {props.books.map((book) => (
+          <li key={book}>{book}</li>
+        ))}
+      </ol>
     </div>
   );
 }

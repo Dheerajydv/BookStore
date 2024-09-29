@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import { toast, Toaster } from "react-hot-toast";
+import { ThemeContext } from "../contexts/ThemeContext";
 
 function UpdatePassword() {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const { theme } = useContext(ThemeContext);
   const handlePasswordChangeBtn = (e) => {
     console.log({ oldPassword, newPassword });
     e.preventDefault();
@@ -30,6 +32,11 @@ function UpdatePassword() {
     <div>
       <p>Change Password</p>
       <input
+        className={
+          theme === "dark"
+            ? "bg-gray-700 h-6 rounded-xl px-4"
+            : "h-6 rounded-xl px-4 border border-black"
+        }
         type="text"
         placeholder="Enter Old Password"
         value={oldPassword}
@@ -38,6 +45,11 @@ function UpdatePassword() {
         }}
       />
       <input
+        className={
+          theme === "dark"
+            ? "bg-gray-700 h-6 rounded-xl px-4"
+            : "h-6 rounded-xl px-4 border border-black"
+        }
         type="text"
         placeholder="Enter New Password"
         value={newPassword}
@@ -45,7 +57,12 @@ function UpdatePassword() {
           setNewPassword(e.target.value);
         }}
       />
-      <button onClick={handlePasswordChangeBtn}>Update Password</button>
+      <button
+        className="h-6 rounded-xl px-4 bg-orange-500"
+        onClick={handlePasswordChangeBtn}
+      >
+        Update Password
+      </button>
     </div>
   );
 }
