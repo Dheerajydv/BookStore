@@ -6,7 +6,7 @@ import Footer from "../components/Footer";
 
 function Home() {
   const [allBooks, setAllBooks] = useState([]);
-  const { theme, setTheme } = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
   useEffect(() => {
     axios.get("http://localhost:8000/api/v1/books/allbooks").then((res) => {
       // console.log(res.data.data);

@@ -7,6 +7,7 @@ const generateAccessToken = async (userId) => {
   try {
     const user = await User.findById(userId);
     const accessToken = await user.generateAccessToken();
+    console.log(accessToken);
     return accessToken;
   } catch (error) {
     console.error(error);

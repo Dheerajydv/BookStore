@@ -9,6 +9,7 @@ import UpdatePassword from "../components/UpdatePassword";
 import { AuthContext } from "../contexts/AuthContext";
 import { ThemeContext } from "../contexts/ThemeContext";
 import Footer from "../components/Footer";
+import AddBooks from "../components/AddBooks";
 
 function Profile() {
   // const thisBook = [
@@ -92,7 +93,7 @@ function Profile() {
   }, [setData]);
   const { theme } = useContext(ThemeContext);
   return (
-    <>
+    <div>
       <Navbar />
       <div
         className={
@@ -135,8 +136,21 @@ function Profile() {
           </div>
         </div>
       </div>
-      <Footer />
-    </>
+      <div
+        className={
+          theme === "dark"
+            ? "bg-gray-950 m-0 py-2 text-white text-center"
+            : "text-center m-0 py-2"
+        }
+      >
+        <h1 className="font-bold my-4 text-3xl">Add Books</h1>
+        <h1 className="font-bold my-4 text-3xl">↓</h1>
+      </div>
+      <div className="h-80">
+        <AddBooks />
+      </div>
+      {/* <Footer /> */}
+    </div>
   );
 }
 

@@ -3,9 +3,10 @@ import Navbar from "../components/Navbar";
 import axios from "axios";
 import { ThemeContext } from "../contexts/ThemeContext";
 import { toast, Toaster } from "react-hot-toast";
+import AddBooks from "../components/AddBooks";
 
 function Login() {
-  const { theme, setTheme } = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
   const [data, setData] = useState({ email: "", password: "" });
 
   const handleLogin = async () => {
@@ -32,8 +33,13 @@ function Login() {
       }
     >
       <Navbar />
-      <div>
+      <div className="h-screen w-screen flex flex-col gap-2 justify-center items-center">
         <input
+          className={
+            theme === "dark"
+              ? "bg-gray-700 h-6 rounded-xl px-4"
+              : "h-6 rounded-xl px-4 border border-black"
+          }
           type="text"
           placeholder="Email"
           value={data.email}
@@ -42,6 +48,11 @@ function Login() {
           }}
         />
         <input
+          className={
+            theme === "dark"
+              ? "bg-gray-700 h-6 rounded-xl px-4"
+              : "h-6 rounded-xl px-4 border border-black"
+          }
           type="password"
           placeholder="Password"
           value={data.password}
@@ -49,8 +60,14 @@ function Login() {
             setData({ ...data, password: e.target.value });
           }}
         />
-        <button onClick={handleLogin}>Login</button>
+        <button
+          className="h-6 rounded-xl px-4 bg-orange-500"
+          onClick={handleLogin}
+        >
+          Login
+        </button>
       </div>
+      {/* <AddBooks /> */}
       <Toaster position="botton-right" />
     </div>
   );

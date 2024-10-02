@@ -1,26 +1,23 @@
 import React, { useContext, useState } from "react";
-import Navbar from "../components/Navbar";
-import axios from "axios";
-import { toast, Toaster } from "react-hot-toast";
 import { ThemeContext } from "../contexts/ThemeContext";
+import { toast, Toaster } from "react-hot-toast";
+import axios from "axios";
 
-function Signup() {
+function AddBooks() {
   const { theme } = useContext(ThemeContext);
   const [data, setData] = useState({
-    email: "",
-    username: "",
-    password: "",
+    bookTitle: "",
+    author: "",
+    bookRating: 0,
+    bookCover: "",
   });
 
-  const [profilePicture, setProfilePicture] = useState(null);
-
-  const handleSignUp = (e) => {
-    e.preventDefault();
-    const { email, username, password } = data;
+  const handleAddBookBtnClick = async () => {
+    const { bookTitle, author, bookRating, bookCover } = data;
     axios
       .post(
-        "http://localhost:8000/api/v1/auth/signup",
-        { email, username, password, profilePicture },
+        "http://localhost:8000/api/v1/books/addbook",
+        { bookTitle, author, bookCover, bookRating },
         {
           withCredentials: true,
           credentials: "include",
@@ -37,25 +34,26 @@ function Signup() {
       });
   };
   return (
-    <div
-      className={
-        theme == "dark" ? "bg-gray-950 h-screen text-white" : "bg-white"
-      }
-    >
-      <Navbar />
-      <form className="h-screen w-screen flex flex-col gap-2 justify-center items-center">
+    <>
+      <div
+        className={
+          theme === "dark"
+            ? "h-screen w-screen flex flex-col bg-gray-950 text-white gap-2 justify-center items-center"
+            : "h-screen w-screen flex flex-col gap-2 justify-center items-center"
+        }
+      >
         <input
           className={
             theme === "dark"
               ? "bg-gray-700 h-6 rounded-xl px-4"
               : "h-6 rounded-xl px-4 border border-black"
           }
-          type="text"
-          placeholder="Email"
-          value={data.email}
+          value={data.bookTitle}
           onChange={(e) => {
-            setData({ ...data, email: e.target.value });
+            setData({ ...data, bookTitle: e.target.value });
           }}
+          type="text"
+          placeholder="bookTitle"
         />
         <input
           className={
@@ -63,12 +61,12 @@ function Signup() {
               ? "bg-gray-700 h-6 rounded-xl px-4"
               : "h-6 rounded-xl px-4 border border-black"
           }
-          type="text"
-          placeholder="Username"
-          value={data.username}
+          value={data.author}
           onChange={(e) => {
-            setData({ ...data, username: e.target.value });
+            setData({ ...data, author: e.target.value });
           }}
+          type="text"
+          placeholder="Author"
         />
         <input
           className={
@@ -76,29 +74,30 @@ function Signup() {
               ? "bg-gray-700 h-6 rounded-xl px-4"
               : "h-6 rounded-xl px-4 border border-black"
           }
-          type="password"
-          placeholder="Password"
-          value={data.password}
+          value={data.bookRating}
           onChange={(e) => {
-            setData({ ...data, password: e.target.value });
+            setData({ ...data, bookRating: e.target.value });
           }}
+          type="text"
+          placeholder="Rating ⭐️"
         />
         <input
           type="file"
           onChange={(e) => {
-            setProfilePicture(e.target.files[0]);
+            setData({ ...data, bookCover: e.target.files[0] });
           }}
+          placeholder="Rating ⭐️"
         />
         <button
+          onClick={handleAddBookBtnClick}
           className="h-6 rounded-xl px-4 bg-orange-500"
-          onClick={handleSignUp}
         >
-          Signup
+          Add Book
         </button>
-      </form>
-      <Toaster position="bottom-right" />
-    </div>
+      </div>
+      <Toaster position="botton-right" />
+    </>
   );
 }
 
-export default Signup;
+export default AddBooks;
