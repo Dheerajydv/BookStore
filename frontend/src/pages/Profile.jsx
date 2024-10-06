@@ -8,7 +8,6 @@ import UpdateUsername from "../components/UpdateUsername";
 import UpdatePassword from "../components/UpdatePassword";
 import { AuthContext } from "../contexts/AuthContext";
 import { ThemeContext } from "../contexts/ThemeContext";
-import Footer from "../components/Footer";
 import AddBooks from "../components/AddBooks";
 
 function Profile() {
@@ -77,7 +76,7 @@ function Profile() {
         withCredentials: true,
       })
       .then((response) => {
-        // console.log(response.data.data);
+        console.log(response.data.data);
         setData({
           username: response.data.data.username,
           email: response.data.data.email,
