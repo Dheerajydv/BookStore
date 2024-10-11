@@ -1,7 +1,7 @@
 import React from "react";
 
 function BookList(props) {
-  // console.log(props.book);
+  console.log(props.books);
   return (
     <div className="my-4  rounded-xl py-4 ">
       <h3 className="text-xl font-semibold underline">

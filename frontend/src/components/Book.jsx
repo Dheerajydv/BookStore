@@ -21,7 +21,34 @@ function Book(props) {
         }
       )
       .then((res) => {
-        console.log(res.data.message);
+        // console.log(res.data.message);
+        if (res.data.error) {
+          toast.error(res.data.error.message);
+          console.log(res.data.error.message);
+        } else {
+          toast.success(res.data.message);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error.error.message);
+      });
+  };
+
+  const disLikeBookBtnFunction = () => {
+    // console.log(props.book._id);
+    axios
+      .post(
+        `http://localhost:8000/api/v1/books/dislikebook/${props.book._id}`,
+        {},
+        {
+          withCredentials: true,
+          credentials: "include",
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      )
+      .then((res) => {
+        // console.log(res.data.message);
         if (res.data.error) {
           toast.error(res.data.error.message);
           console.log(res.data.error.message);
@@ -73,7 +100,7 @@ function Book(props) {
         <div>
           <p>Dislikes - {props.book.disLikes}</p>
           <button
-            // onClick={() => console.log(props.book._id)}
+            onClick={disLikeBookBtnFunction}
             className={
               theme === "dark"
                 ? "rounded-xl h-8 px-1 w-18 bg-gray-700"

@@ -55,6 +55,8 @@ const signupUser = async (req, res) => {
       profilePicLocalPath
     );
 
+    console.log(profilePicLocalPath);
+
     await User.create({
       username,
       email,

@@ -73,6 +73,8 @@ const likeBook = async (req, res) => {
       "-_id -username -password -email -disLikedBooks -profilePicture -toRead"
     );
 
+    console.log(allLikedBooks);
+
     let bookAlreadyLiked;
     // console.log(allLikedBooks.likedBooks.length);
     for (let i = 0; i < allLikedBooks.likedBooks.length; i++) {
@@ -114,14 +116,65 @@ const likeBook = async (req, res) => {
 
 const disLikeBooks = async (req, res) => {
   try {
+    // find the book id
     const bookId = req.params.id;
     if (!bookId) {
-      throw new ApiError(400, "Book id not found");
+      throw new ApiError(400, "Book Id not Found");
     }
+
+    const userId = req.user._id.toString();
+    if (!userId) {
+      throw new ApiError(401, "Please login first to like and dislike books ");
+    }
+
+    // check if the book is already liked
+    const allDisLikedBooks = await User.findById(userId).select(
+      "-_id -username -password -email -likedBooks -profilePicture -toRead"
+    );
+
+    console.log(allDisLikedBooks.disLikedBooks);
+
+    let bookAlreadyDisiked = false;
+    // console.log(allLikedBooks.likedBooks.length);
+    for (let i = 0; i < allDisLikedBooks.disLikedBooks.length; i++) {
+      if (allDisLikedBooks.disLikedBooks[i].toString() === bookId) {
+        bookAlreadyDisiked = true;
+      }
+    }
+    if (bookAlreadyDisiked) {
+      throw new ApiError(400, "Book Already Disliked");
+    }
+
+    // find the book with the id
+    // update the likes by one
+    const book = await Book.findByIdAndUpdate(bookId, {
+      $inc: { disLikes: 1 },
+    });
+    if (!book) {
+      throw new ApiError(500, "Book not found");
+    }
+
+    const updatedBook = await book.save();
+
+    // find the user who liked and add the book with the id to the liked books section of the user
+    const user = await User.findByIdAndUpdate(userId, {
+      $push: { disLikedBooks: updatedBook },
+    });
+
+    // update both the user and book section
+    res
+      .status(200)
+      .json(
+        new ApiResponse(200, { user, updatedBook }, "Book Disliked succesfully")
+      );
   } catch (error) {
     console.error("Some error in dislike book controller : ", error);
     res.json({ error });
   }
 };
 
-export { getAllBooks, addBook, likeBook };
+const markAsRead = async (req, res) => {
+  const bookId = req.params.id;
+};
+
+export { getAllBooks, addBook, likeBook, disLikeBooks, markAsRead };

@@ -130,7 +130,7 @@ function Profile() {
             <div>
               <BookList title={"Liked Books"} books={data.likedBooks} />
               <BookList title={"Disiked Books"} books={data.disLikedBooks} />
-              <BookList title={"Books To Read"} books={data.toRead} />
+              <BookList title={"Books Read"} books={data.toRead} />
             </div>
           </div>
         </div>
