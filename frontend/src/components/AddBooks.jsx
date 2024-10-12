@@ -53,7 +53,7 @@ function AddBooks() {
             setData({ ...data, bookTitle: e.target.value });
           }}
           type="text"
-          placeholder="bookTitle"
+          placeholder="Book Title"
         />
         <input
           className={

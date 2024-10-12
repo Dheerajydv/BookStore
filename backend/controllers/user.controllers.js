@@ -4,14 +4,35 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 
 const getUserData = async (req, res) => {
-  //   res.send("hello");
   try {
     const userId = req.user._id;
     if (!userId) {
       throw new ApiError(401, "Please Provide a id");
     }
 
-    const userData = await User.findById(userId).select("-password");
+    const userData = await User.aggregate([
+      {
+        $match: {
+          _id: userId,
+        },
+      },
+      {
+        $lookup: {
+          from: "books",
+          localField: "likedBooks",
+          foreignField: "_id",
+          as: "likedBooks",
+        },
+      },
+      {
+        $lookup: {
+          from: "books",
+          localField: "disLikedBooks",
+          foreignField: "_id",
+          as: "disLikedBooks",
+        },
+      },
+    ]);
     if (!userData) {
       res.status(404).json(new ApiError(404, "User data not found"));
     }
@@ -121,15 +142,4 @@ const updateProfilePhoto = async (req, res) => {
   }
 };
 
-// const likeBook = async (req, res) => {
-//   const bookId = req.params._id;
-//   cosnt
-// };
-
-export {
-  getUserData,
-  // likeBook,
-  changePassword,
-  updateProfilePhoto,
-  changeUsername,
-};
+export { getUserData, changePassword, updateProfilePhoto, changeUsername };
