@@ -179,12 +179,13 @@ const markAsRead = async (req, res) => {
 
 const searchBook = async (req, res) => {
   try {
-    const bookName = req.body;
-    if (!bookName) {
+    const { title } = req.body;
+    if (!title) {
       throw new ApiError(400, "Please Enter a Book Name");
     }
 
-    const book = await Book.findOne(bookName);
+    const book = await Book.findOne({ title });
+    console.log(book);
     if (!book) {
       throw new ApiError(404, "Book Not Found");
     }

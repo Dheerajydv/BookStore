@@ -8,7 +8,7 @@ import { toast, Toaster } from "react-hot-toast";
 function Navbar() {
   const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
   const { theme, setTheme } = useContext(ThemeContext);
-  const [searchInput, setSearchInput] = useState("");
+  const [title, setTitle] = useState("");
   const navigate = useNavigate();
   const [profileUrl, setProfileUrl] = useState("");
 
@@ -40,15 +40,11 @@ function Navbar() {
   };
 
   const handleSearchBtnClick = () => {
-    console.log(searchInput);
+    console.log(title);
     axios
-      .get(
-        `http://localhost:8000/api/v1/books/search`,
-        {
-          searchInput,
-        },
-        {}
-      )
+      .post("http://localhost:8000/api/v1/books/search", {
+        title,
+      })
       .then((res) => {
         console.log(res.data);
         if (res.data.error) {
@@ -101,10 +97,10 @@ function Navbar() {
           }
           type="text"
           placeholder="Search Books"
-          name="searchInput"
-          value={searchInput}
+          name="title"
+          value={title}
           onChange={(e) => {
-            setSearchInput(e.target.value);
+            setTitle(e.target.value);
           }}
         />
         <button
