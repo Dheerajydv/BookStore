@@ -41,6 +41,23 @@ function Navbar() {
 
   const handleSearchBtnClick = () => {
     console.log(searchInput);
+    axios
+      .get(
+        `http://localhost:8000/api/v1/books/search`,
+        {
+          searchInput,
+        },
+        {}
+      )
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.error) {
+          toast.error(res.data.error.message);
+        } else {
+          toast.success(res.data.message);
+        }
+      })
+      .catch((error) => console.error(error));
   };
 
   const themeChangeBtnClickFunction = () => {

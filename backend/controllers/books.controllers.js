@@ -177,4 +177,23 @@ const markAsRead = async (req, res) => {
   const bookId = req.params.id;
 };
 
-export { getAllBooks, addBook, likeBook, disLikeBooks, markAsRead };
+const searchBook = async (req, res) => {
+  try {
+    const bookName = req.body;
+    if (!bookName) {
+      throw new ApiError(400, "Please Enter a Book Name");
+    }
+
+    const book = await Book.findOne(bookName);
+    if (!book) {
+      throw new ApiError(404, "Book Not Found");
+    }
+
+    res.status(200).json(new ApiResponse(200, book, "Book Found"));
+  } catch (error) {
+    console.error("Some error in search book controller : ", error);
+    res.json({ error });
+  }
+};
+
+export { getAllBooks, addBook, likeBook, disLikeBooks, markAsRead, searchBook };
