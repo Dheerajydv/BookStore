@@ -10,7 +10,7 @@ function Home() {
   const { allBooks, setAllBooks } = useContext(BookContext);
   const { theme } = useContext(ThemeContext);
   useEffect(() => {
-    axios.get("http://localhost:8000/api/v1/books/allbooks").then((res) => {
+    axios.get("/api/v1/books/allbooks").then((res) => {
       // console.log(res.data.data);
       setAllBooks(res.data.data);
     });

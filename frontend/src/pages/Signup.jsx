@@ -19,7 +19,7 @@ function Signup() {
     const { email, username, password } = data;
     axios
       .post(
-        "http://localhost:8000/api/v1/auth/signup",
+        "/api/v1/auth/signup",
         { email, username, password, profilePicture },
         {
           withCredentials: true,
@@ -85,6 +85,7 @@ function Signup() {
         />
         <input
           type="file"
+          className="w-55"
           onChange={(e) => {
             setProfilePicture(e.target.files[0]);
           }}

@@ -11,7 +11,7 @@ function UpdateUsername() {
     e.preventDefault();
     axios
       .post(
-        "http://localhost:8000/api/v1/users/changeusername",
+        "/api/v1/users/changeusername",
         { newUsername },
         {
           withCredentials: true,

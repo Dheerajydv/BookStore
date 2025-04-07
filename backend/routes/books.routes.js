@@ -17,6 +17,6 @@ router.post("/search", searchBook);
 router.post("/addbook", upload.single("bookCover"), addBook);
 router.post("/likebook/:id", verifyUser, likeBook);
 router.post("/dislikebook/:id", verifyUser, disLikeBooks);
-router.post("/markasread/:id", verifyUser, disLikeBooks);
+router.post("/markasread/:id", verifyUser, markAsRead);
 
 export default router;

@@ -23,7 +23,7 @@ function Profile() {
   });
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/v1/users/getuser", {
+      .get("/api/v1/users/getuser", {
         withCredentials: true,
       })
       .then((response) => {

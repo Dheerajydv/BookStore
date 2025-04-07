@@ -9,10 +9,9 @@ function Book(props) {
   const { allBooks, setAllBooks } = useContext(BookContext);
 
   const likeBookBtnFunction = () => {
-    // console.log(props.book._id);
     axios
       .post(
-        `http://localhost:8000/api/v1/books/likebook/${props.book._id}`,
+        `/api/v1/books/likebook/${props.book._id}`,
         {},
         {
           withCredentials: true,
@@ -39,7 +38,7 @@ function Book(props) {
     // console.log(props.book._id);
     axios
       .post(
-        `http://localhost:8000/api/v1/books/dislikebook/${props.book._id}`,
+        `/api/v1/books/dislikebook/${props.book._id}`,
         {},
         {
           withCredentials: true,
@@ -60,6 +59,32 @@ function Book(props) {
         console.log(error);
         toast.error(error.error.message);
       });
+  };
+
+  const markAsReadBtnFunction = () => {
+    try {
+      axios
+        .post(
+          "/api/v1/books/markasread/${props.book._id}",
+          {},
+          {
+            withCredentials: true,
+            credentials: "include",
+            headers: { "Content-Type": "multipart/form-data" },
+          }
+        )
+        .then((res) => {
+          if (res.data.error) {
+            toast.error(res.data.error.message);
+            console.log(res.data.error.message);
+          } else {
+            toast.success(res.data.message);
+          }
+        });
+    } catch (error) {
+      console.log(error);
+      toast.error(error.error.message);
+    }
   };
   return (
     <div
@@ -113,6 +138,7 @@ function Book(props) {
         <div>
           <p>Read By - {props.book.readBy}</p>
           <button
+            onClick={markAsReadBtnFunction}
             className={
               theme === "dark"
                 ? "rounded-xl h-8 px-1 w-18 bg-gray-700"

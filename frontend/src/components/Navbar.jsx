@@ -14,7 +14,7 @@ function Navbar() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/v1/auth/getuser", {
+      .get("/api/v1/auth/getuser", {
         withCredentials: true,
       })
       .then((response) => {
@@ -42,7 +42,7 @@ function Navbar() {
   const handleSearchBtnClick = () => {
     console.log(title);
     axios
-      .post("http://localhost:8000/api/v1/books/search", {
+      .post("/api/v1/books/search", {
         title,
       })
       .then((res) => {
@@ -114,7 +114,7 @@ function Navbar() {
         <div onClick={handleProfileBtnClick}>
           <img
             className="h-16 w-16 rounded-full"
-            src={isAuthenticated ? profileUrl : "../assets/pfp.jpg"}
+            src={isAuthenticated ? profileUrl : "../../black-pfp-5.jpg"}
             alt="Profile Picture"
           />
         </div>
@@ -142,8 +142,15 @@ function Navbar() {
         </button>
       </div>
       <div>
-        <button onClick={themeChangeBtnClickFunction}>
-          {theme == "dark" ? "☀" : "🌑"}
+        <button
+          className={
+            theme == "dark"
+              ? " bg-orange-500 rounded-lg px-2"
+              : " bg-orange-500 rounded-lg px-2"
+          }
+          onClick={themeChangeBtnClickFunction}
+        >
+          {theme == "dark" ? "Dark Mode" : "Light Mode"}
         </button>
       </div>
       <Toaster position="botton-right" />

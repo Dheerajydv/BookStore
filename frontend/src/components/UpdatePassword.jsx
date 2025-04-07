@@ -12,7 +12,7 @@ function UpdatePassword() {
     e.preventDefault();
     axios
       .post(
-        "http://localhost:8000/api/v1/users/changepassword",
+        "/api/v1/users/changepassword",
         { oldPassword, newPassword },
         {
           withCredentials: true,

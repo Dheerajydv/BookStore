@@ -72,11 +72,7 @@ const likeBook = async (req, res) => {
     const allLikedBooks = await User.findById(userId).select(
       "-_id -username -password -email -disLikedBooks -profilePicture -toRead"
     );
-
-    console.log(allLikedBooks);
-
     let bookAlreadyLiked;
-    // console.log(allLikedBooks.likedBooks.length);
     for (let i = 0; i < allLikedBooks.likedBooks.length; i++) {
       if (allLikedBooks.likedBooks[i].toString() === bookId) {
         bookAlreadyLiked = true;
@@ -84,6 +80,20 @@ const likeBook = async (req, res) => {
     }
     if (bookAlreadyLiked) {
       throw new ApiError(400, "Book Already Liked");
+    }
+
+    //find if the book is already disliked
+    const allDisLikedBooks = await User.findById(userId).select(
+      "-_id -username -password -email -likedBooks -profilePicture -toRead"
+    );
+    let bookAlreadyDisiked;
+    for (let i = 0; i < allDisLikedBooks.disLikedBooks.length; i++) {
+      if (allDisLikedBooks.disLikedBooks[i].toString() === bookId) {
+        bookAlreadyDisiked = true;
+      }
+    }
+    if (bookAlreadyDisiked) {
+      throw new ApiError(400, "Book Already Disliked");
     }
 
     // find the book with the id
@@ -131,11 +141,7 @@ const disLikeBooks = async (req, res) => {
     const allDisLikedBooks = await User.findById(userId).select(
       "-_id -username -password -email -likedBooks -profilePicture -toRead"
     );
-
-    console.log(allDisLikedBooks.disLikedBooks);
-
     let bookAlreadyDisiked = false;
-    // console.log(allLikedBooks.likedBooks.length);
     for (let i = 0; i < allDisLikedBooks.disLikedBooks.length; i++) {
       if (allDisLikedBooks.disLikedBooks[i].toString() === bookId) {
         bookAlreadyDisiked = true;
@@ -143,6 +149,20 @@ const disLikeBooks = async (req, res) => {
     }
     if (bookAlreadyDisiked) {
       throw new ApiError(400, "Book Already Disliked");
+    }
+
+    //find if book already liked
+    const allLikedBooks = await User.findById(userId).select(
+      "-_id -username -password -email -disLikedBooks -profilePicture -toRead"
+    );
+    let bookAlreadyLiked;
+    for (let i = 0; i < allLikedBooks.likedBooks.length; i++) {
+      if (allLikedBooks.likedBooks[i].toString() === bookId) {
+        bookAlreadyLiked = true;
+      }
+    }
+    if (bookAlreadyLiked) {
+      throw new ApiError(400, "Book Already Liked");
     }
 
     // find the book with the id
@@ -174,7 +194,28 @@ const disLikeBooks = async (req, res) => {
 };
 
 const markAsRead = async (req, res) => {
-  const bookId = req.params.id;
+  try {
+    const bookId = req.params.id;
+    if (!bookId) {
+      throw new ApiError(400, "Book Id not Found");
+    }
+
+    const userId = req.user._id.toString();
+    if (!userId) {
+      throw new ApiError(401, "Please login first to Mark the book as Read");
+    }
+
+    const bookAlreadyInToRead = await User.findById(userId).select(
+      "-_id -username -password -email -likedBooks -profilePicture -dislikedBooks"
+    );
+    if (!bookAlreadyInToRead) {
+      throw new ApiError(401, "Book already marked as to read");
+    }
+    // console.log(bookAlreadyInToRead);
+  } catch (error) {
+    console.error("Some error in markAsRead book controller : ", error);
+    res.json({ error });
+  }
 };
 
 const searchBook = async (req, res) => {

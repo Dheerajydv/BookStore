@@ -16,7 +16,7 @@ function AddBooks() {
     const { bookTitle, author, bookRating, bookCover } = data;
     axios
       .post(
-        "http://localhost:8000/api/v1/books/addbook",
+        "/api/v1/books/addbook",
         { bookTitle, author, bookCover, bookRating },
         {
           withCredentials: true,
@@ -83,6 +83,7 @@ function AddBooks() {
         />
         <input
           type="file"
+          className="w-52"
           onChange={(e) => {
             setData({ ...data, bookCover: e.target.files[0] });
           }}

@@ -9,7 +9,7 @@ function UpdateProfile() {
     e.preventDefault();
     axios
       .post(
-        "http://localhost:8000/api/v1/users/updateprofilepic",
+        "/api/v1/users/updateprofilepic",
         { newProfilePicture },
         {
           withCredentials: true,
