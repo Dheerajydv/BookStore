@@ -19,6 +19,14 @@ const getUserData = async (req, res) => {
       {
         $lookup: {
           from: "books",
+          localField: "readBy",
+          foreignField: "_id",
+          as: "readBy",
+        },
+      },
+      {
+        $lookup: {
+          from: "books",
           localField: "likedBooks",
           foreignField: "_id",
           as: "likedBooks",

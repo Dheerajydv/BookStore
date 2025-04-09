@@ -216,7 +216,7 @@ const markAsRead = async (req, res) => {
       }
     }
     if (bookAlreadyInToRead) {
-      throw new ApiError(401, "Book already marked as to read");
+      throw new ApiError(401, "Book already read");
     }
 
     const book = await Book.findByIdAndUpdate(bookId, {
@@ -236,13 +236,7 @@ const markAsRead = async (req, res) => {
     // update both the user and book section
     res
       .status(200)
-      .json(
-        new ApiResponse(
-          200,
-          { user, updatedBook },
-          "Book added for future reading succesfully"
-        )
-      );
+      .json(new ApiResponse(200, { user, updatedBook }, "Book marked as read"));
   } catch (error) {
     console.error("Some error in markAsRead book controller : ", error);
     res.json({ error });
