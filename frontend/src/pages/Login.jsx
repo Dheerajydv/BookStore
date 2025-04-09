@@ -11,20 +11,24 @@ function Login() {
 
   const handleLogin = async () => {
     const { email, password } = data;
-    axios
-      .post(
-        "/api/v1/auth/login",
-        { email, password },
-        { withCredentials: true, credentials: "include" }
-      )
-      .then((res) => {
-        console.log(res.data);
-        toast.success(res.data.message);
-      })
-      .catch((error) => {
-        console.error(error.response.data.error.message);
-        toast.error(error.response.data.error.message);
-      });
+    if (password.length < 8) {
+      toast.error("Password should be greater than 8 letters");
+    } else {
+      axios
+        .post(
+          "/api/v1/auth/login",
+          { email, password },
+          { withCredentials: true, credentials: "include" }
+        )
+        .then((res) => {
+          console.log(res.data);
+          toast.success(res.data.message);
+        })
+        .catch((error) => {
+          console.error(error.response.data.error.message);
+          toast.error(error.response.data.error.message);
+        });
+    }
   };
   return (
     <div

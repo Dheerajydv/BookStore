@@ -110,7 +110,7 @@ const likeBook = async (req, res) => {
     // find the user who liked and add the book with the id to the liked books section of the user
     const user = await User.findByIdAndUpdate(userId, {
       $push: { likedBooks: updatedBook },
-    });
+    }).select("-password");
 
     // update both the user and book section
     res
@@ -137,7 +137,7 @@ const disLikeBooks = async (req, res) => {
       throw new ApiError(401, "Please login first to like and dislike books ");
     }
 
-    // check if the book is already liked
+    // check if the book is already disliked
     const allDisLikedBooks = await User.findById(userId).select(
       "-_id -username -password -email -likedBooks -profilePicture -toRead"
     );
@@ -205,13 +205,44 @@ const markAsRead = async (req, res) => {
       throw new ApiError(401, "Please login first to Mark the book as Read");
     }
 
-    const bookAlreadyInToRead = await User.findById(userId).select(
-      "-_id -username -password -email -likedBooks -profilePicture -dislikedBooks"
+    const allBooksInToRead = await User.findById(userId).select(
+      "-_id -username -password -email -likedBooks -profilePicture -disLikedBooks"
     );
-    if (!bookAlreadyInToRead) {
+
+    let bookAlreadyInToRead;
+    for (let i = 0; i < allBooksInToRead.toRead.length; i++) {
+      if (allBooksInToRead.toRead[i].toString() === bookId) {
+        bookAlreadyInToRead = true;
+      }
+    }
+    if (bookAlreadyInToRead) {
       throw new ApiError(401, "Book already marked as to read");
     }
-    // console.log(bookAlreadyInToRead);
+
+    const book = await Book.findByIdAndUpdate(bookId, {
+      $inc: { readBy: 1 },
+    }).select("-password");
+    if (!book) {
+      new ApiError(400, "Book not found");
+    }
+
+    const updatedBook = await book.save();
+
+    // find the user who liked and add the book with the id to the liked books section of the user
+    const user = await User.findByIdAndUpdate(userId, {
+      $push: { toRead: updatedBook },
+    });
+
+    // update both the user and book section
+    res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          { user, updatedBook },
+          "Book added for future reading succesfully"
+        )
+      );
   } catch (error) {
     console.error("Some error in markAsRead book controller : ", error);
     res.json({ error });
@@ -225,8 +256,13 @@ const searchBook = async (req, res) => {
       throw new ApiError(400, "Please Enter a Book Name");
     }
 
-    const book = await Book.findOne({ title });
-    console.log(book);
+    const book = await Book.aggregate([
+      {
+        $match: {
+          title: title,
+        },
+      },
+    ]);
     if (!book) {
       throw new ApiError(404, "Book Not Found");
     }

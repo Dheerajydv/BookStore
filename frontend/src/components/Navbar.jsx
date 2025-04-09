@@ -40,13 +40,12 @@ function Navbar() {
   };
 
   const handleSearchBtnClick = () => {
-    console.log(title);
+    setTitle(title.toLowerCase());
     axios
       .post("/api/v1/books/search", {
         title,
       })
       .then((res) => {
-        console.log(res.data);
         if (res.data.error) {
           toast.error(res.data.error.message);
         } else {

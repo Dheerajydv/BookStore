@@ -65,7 +65,7 @@ function Book(props) {
     try {
       axios
         .post(
-          "/api/v1/books/markasread/${props.book._id}",
+          `/api/v1/books/markasread/${props.book._id}`,
           {},
           {
             withCredentials: true,

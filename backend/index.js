@@ -11,7 +11,6 @@ import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";
 
 const app = express();
-// const port = process.env.PORT;
 
 // Middlewares
 dotenv.config();
@@ -39,7 +38,7 @@ app.listen(process.env.PORT, () => {
 // DataBase
 const connectToDatabase = () => {
   mongoose
-    .connect("mongodb://localhost:27017/bookstore")
+    .connect(process.env.YOUR_MONGO_URL)
     .then(() => console.log("MongoDB connected sucessfully"))
     .catch((err) =>
       console.error("Some error occured while connecting to MongoDB", err)

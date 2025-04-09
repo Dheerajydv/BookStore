@@ -27,7 +27,6 @@ function Profile() {
         withCredentials: true,
       })
       .then((response) => {
-        // console.log(response.data.data[0].likedBooks[0].author);
         setData({
           username: response.data.data[0].username,
           email: response.data.data[0].email,
@@ -42,14 +41,7 @@ function Profile() {
       });
   }, [setData]);
   const { theme } = useContext(ThemeContext);
-  // console.log(data.likedBooks);
   return (
-    // <div>
-    //   <h1>{data.username}</h1>
-    //   {data.disLikedBooks.map((book) => (
-    //     <p>{book.title}</p>
-    //   ))}
-    // </div>
     <div>
       <Navbar />
       <div
@@ -88,7 +80,7 @@ function Profile() {
             <div>
               <BookList title={"Liked Books"} books={data.likedBooks} />
               <BookList title={"Disiked Books"} books={data.disLikedBooks} />
-              <BookList title={"Books Read"} books={data.toRead} />
+              <BookList title={"Read Books"} books={data.toRead} />
             </div>
           </div>
         </div>
@@ -106,7 +98,6 @@ function Profile() {
       <div className="h-80">
         <AddBooks />
       </div>
-      {/* <Footer /> */}
     </div>
   );
 }

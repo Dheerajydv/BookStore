@@ -2,12 +2,12 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
 import User from "../model/user.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import EmailValidator from "email-validator";
 
 const generateAccessToken = async (userId) => {
   try {
     const user = await User.findById(userId);
     const accessToken = await user.generateAccessToken();
-    console.log(accessToken);
     return accessToken;
   } catch (error) {
     console.error(error);
@@ -32,6 +32,11 @@ const signupUser = async (req, res) => {
       );
     }
 
+    let emailVerified = EmailValidator.validate(email);
+    if (!emailVerified) {
+      throw new ApiError(400, "Provide a proper email adress");
+    }
+
     const userAlreadyExists = await User.findOne({ email });
     if (userAlreadyExists) {
       throw new ApiError(400, "User already exists please Login");
@@ -45,8 +50,7 @@ const signupUser = async (req, res) => {
       );
     }
 
-    // console.log(req.file.path);
-    const profilePicLocalPath = req.file.path;
+    const profilePicLocalPath = req.file?.path;
     if (!profilePicLocalPath) {
       throw new ApiError(400, "Profile Pic required");
     }

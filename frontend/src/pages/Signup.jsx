@@ -17,24 +17,28 @@ function Signup() {
   const handleSignUp = (e) => {
     e.preventDefault();
     const { email, username, password } = data;
-    axios
-      .post(
-        "/api/v1/auth/signup",
-        { email, username, password, profilePicture },
-        {
-          withCredentials: true,
-          credentials: "include",
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      )
-      .then((res) => {
-        console.log(res.data);
-        toast.success(res.data.message);
-      })
-      .catch((error) => {
-        console.error(error.response.data.error.message);
-        toast.error(error.response.data.error.message);
-      });
+    if (password.length < 8) {
+      toast.error("Password should be greater than 8 letters");
+    } else {
+      axios
+        .post(
+          "/api/v1/auth/signup",
+          { email, username, password, profilePicture },
+          {
+            withCredentials: true,
+            credentials: "include",
+            headers: { "Content-Type": "multipart/form-data" },
+          }
+        )
+        .then((res) => {
+          console.log(res.data);
+          toast.success(res.data.message);
+        })
+        .catch((error) => {
+          console.error(error.response.data.error.message);
+          toast.error(error.response.data.error.message);
+        });
+    }
   };
   return (
     <div

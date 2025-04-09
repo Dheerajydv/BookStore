@@ -32,6 +32,14 @@ const getUserData = async (req, res) => {
           as: "disLikedBooks",
         },
       },
+      {
+        $lookup: {
+          from: "books",
+          localField: "toRead",
+          foreignField: "_id",
+          as: "toRead",
+        },
+      },
     ]);
     if (!userData) {
       res.status(404).json(new ApiError(404, "User data not found"));
