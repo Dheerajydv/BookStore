@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://bookstore-3wxw.onrender.com",
+        target: "https://bookstore-backend-1cyf.onrender.com",
       },
     },
   },
