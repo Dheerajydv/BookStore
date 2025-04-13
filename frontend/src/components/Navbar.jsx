@@ -18,7 +18,7 @@ function Navbar() {
         withCredentials: true,
       })
       .then((response) => {
-        setProfileUrl(response.data.data.profilePicture);
+        setProfileUrl(response.data.data?.profilePicture);
       })
       .catch((err) => {
         console.error(err);
