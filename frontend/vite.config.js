@@ -8,6 +8,8 @@ export default defineConfig({
     proxy: {
       "/api": {
         target: "https://bookstore-backend-1cyf.onrender.com",
+        secure: false,
+        changeOrigin: true,
       },
     },
   },
