@@ -11,7 +11,6 @@ function Home() {
   const { theme } = useContext(ThemeContext);
   useEffect(() => {
     axios.get("/api/v1/books/allbooks").then((res) => {
-      // console.log(res.data.data);
       setAllBooks(res.data.data);
     });
   }, [setAllBooks]);

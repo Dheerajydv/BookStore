@@ -14,7 +14,7 @@ const getAllBooks = async (req, res) => {
     res.status(200).json(new ApiResponse(200, allBooks, "All books fetched"));
   } catch (error) {
     console.error(error);
-    res.json({ error });
+    res.status(error.statusCode).json({ error });
   }
 };
 
@@ -51,7 +51,7 @@ const addBook = async (req, res) => {
       .json(new ApiResponse(200, createdBook, "New Book Added Sucessfully"));
   } catch (error) {
     console.error("Some error in add book controller", error);
-    res.json({ error });
+    res.status(error.statusCode).json({ error });
   }
 };
 
@@ -120,7 +120,7 @@ const likeBook = async (req, res) => {
       );
   } catch (error) {
     console.error("Some error in like book controller : ", error);
-    res.json({ error });
+    res.status(error.statusCode).json({ error });
   }
 };
 
@@ -189,7 +189,7 @@ const disLikeBooks = async (req, res) => {
       );
   } catch (error) {
     console.error("Some error in dislike book controller : ", error);
-    res.json({ error });
+    res.status(error.statusCode).json({ error });
   }
 };
 
@@ -239,7 +239,7 @@ const markAsRead = async (req, res) => {
       .json(new ApiResponse(200, { user, updatedBook }, "Book marked as read"));
   } catch (error) {
     console.error("Some error in markAsRead book controller : ", error);
-    res.json({ error });
+    res.status(error.statusCode).json({ error });
   }
 };
 
@@ -264,7 +264,7 @@ const searchBook = async (req, res) => {
     res.status(200).json(new ApiResponse(200, book, "Book Found"));
   } catch (error) {
     console.error("Some error in search book controller : ", error);
-    res.json({ error });
+    res.status(error.statusCode).json({ error });
   }
 };
 

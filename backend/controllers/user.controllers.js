@@ -57,7 +57,7 @@ const getUserData = async (req, res) => {
   } catch (error) {
     console.log(error);
     res
-      .status(500)
+      .status(error.statusCode)
       .json(
         new ApiError(500, "Some error occured in user getUserData controller")
       );
@@ -94,7 +94,7 @@ const changePassword = async (req, res) => {
       .json(new ApiResponse(200, {}, "Password changed sucessfully"));
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error });
+    res.status(error.statusCode).json({ error });
   }
 };
 
@@ -125,7 +125,7 @@ const changeUsername = async (req, res) => {
       );
   } catch (error) {
     console.error(error);
-    res.status(200).json({ error });
+    res.status(error.statusCode).json({ error });
   }
 };
 
@@ -154,7 +154,7 @@ const updateProfilePhoto = async (req, res) => {
       .json(new ApiResponse(200, {}, "Profile Picture changed sucessfully"));
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error });
+    res.status(error.statusCode).json({ error });
   }
 };
 

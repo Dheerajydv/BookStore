@@ -72,7 +72,7 @@ const signupUser = async (req, res) => {
       .json(new ApiResponse(200, createdUser, "Signup sucessfull"));
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error });
+    res.status(error.statusCode).json({ error });
   }
 };
 
@@ -107,7 +107,7 @@ const loginUser = async (req, res) => {
       .json(new ApiResponse(200, loggesInUser, "Login sucessfull"));
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error });
+    res.status(error.statusCode).json({ error });
   }
 };
 
@@ -119,7 +119,7 @@ const getUser = async (req, res) => {
   } catch (error) {
     console.log(error);
     res
-      .status(500)
+      .status(error.statusCode)
       .json(new ApiError(500, "Some error occured in getUser controller"));
   }
 };
