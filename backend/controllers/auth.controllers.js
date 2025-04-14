@@ -72,7 +72,7 @@ const signupUser = async (req, res) => {
       .json(new ApiResponse(200, createdUser, "Signup sucessfull"));
   } catch (error) {
     console.log(error);
-    res.status(error.statusCode).json(error);
+    res.status(error.statusCode).json({ error });
   }
 };
 
