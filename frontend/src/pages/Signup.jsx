@@ -31,8 +31,8 @@ function Signup() {
           }
         )
         .then((res) => {
-          console.log(res.data);
-          toast.success(res.data.message);
+          console.log(res);
+          // toast.success(res.data.message);
         })
         .catch((error) => {
           // console.log(error);
