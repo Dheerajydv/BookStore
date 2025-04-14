@@ -13,7 +13,6 @@ const getAllBooks = async (req, res) => {
 
     res.status(200).json(new ApiResponse(200, allBooks, "All books fetched"));
   } catch (error) {
-    console.error(error);
     res.status(error.statusCode).json({ error });
   }
 };
