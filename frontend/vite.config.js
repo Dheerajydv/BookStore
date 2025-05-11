@@ -10,6 +10,7 @@ export default defineConfig({
         target: "https://bookstore-backend-1cyf.onrender.com",
         secure: false,
         changeOrigin: true,
+        ws: true,
       },
     },
   },
