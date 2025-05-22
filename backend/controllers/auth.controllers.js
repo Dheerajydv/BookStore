@@ -99,7 +99,6 @@ const loginUser = async (req, res) => {
     const options = {
       htmlOnly: false,
       secure: false,
-      sameSite: "None",
     };
 
     res

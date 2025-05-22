@@ -17,15 +17,17 @@ function Login() {
         .post(
           "/api/v1/auth/login",
           { email, password },
-          { withCredentials: true }
+          { withCredentials: true, credentials: "include" }
         )
         .then((res) => {
           console.log(res);
-          toast.success(res.data.message);
+          toast.success(res?.data?.message || "Login Sucessfull");
         })
         .catch((error) => {
-          console.error(error.response.data.error.message);
-          toast.error(error.response.data.error.message);
+          console.error(error?.response?.data?.error?.message);
+          toast.error(
+            error?.response?.data?.error?.message || "Error in Login..."
+          );
         });
     }
   };
