@@ -20,7 +20,7 @@ function Login() {
           { withCredentials: true, credentials: "include" }
         )
         .then((res) => {
-          console.log(res.data);
+          console.log(res);
           toast.success(res.data.message);
         })
         .catch((error) => {
