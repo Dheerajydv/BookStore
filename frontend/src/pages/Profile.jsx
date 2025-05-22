@@ -59,7 +59,7 @@ function Profile() {
           }
         >
           <img
-            src={data.profileUrl}
+            src={data.profileUrl || "../../black-pfp-5.jpg"}
             className="w-80 h-80 rounded-full"
             alt="Profile Picture"
           />
