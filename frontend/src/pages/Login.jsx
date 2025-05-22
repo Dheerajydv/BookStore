@@ -17,7 +17,7 @@ function Login() {
         .post(
           "/api/v1/auth/login",
           { email, password },
-          { withCredentials: true, credentials: "include" }
+          { withCredentials: true }
         )
         .then((res) => {
           console.log(res);
