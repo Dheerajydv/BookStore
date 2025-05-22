@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: true,
+    origin: "https://bookstore-1-9clk.onrender.com",
     optionsSuccessStatus: 200,
     credentials: true,
   })
